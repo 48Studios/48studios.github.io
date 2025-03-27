@@ -26,6 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <head>
           <title>48 Studios</title>
+          <link rel="icon" href="/logo.svg" />
       </head>
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
         {children}
