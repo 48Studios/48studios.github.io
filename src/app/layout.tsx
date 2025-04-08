@@ -24,13 +24,26 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-          <title>48 Studios</title>
-          <link rel="icon" href="/logo.svg" />
-      </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        {children}
-      </body>
+        <head>
+            <link rel="icon" href="/logo.svg"/>
+            <meta charSet="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+            <title>48 Studios</title>
+            <meta name="description" content="48 Studios" />
+            <meta name="author" content="Sarath 'Delta' Singh"/>
+
+            <meta property="og:title" content="48 Studios"/>
+            <meta property="og:description" content="48 Studios"/>
+            <meta property="og:type" content="website"/>
+            <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png"/>
+
+            <meta name="twitter:card" content="summary_large_image"/>
+            <meta name="twitter:site" content="@48studios"/>
+            <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png"/>
+        </head>
+        <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+            {children}
+        </body>
     </html>
   );
 }
