@@ -1,5 +1,5 @@
 'use client';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import { MapPin, Phone, Mail, Send, Clock, ArrowRight } from 'lucide-react';
 import { useForm } from 'react-hook-form';
@@ -17,30 +17,15 @@ import {
   FormLabel,
   FormMessage,
 } from '@app/components/ui/form';
-// import { toast } from "sonner";
 import Navbar from '@app/components/Navbar';
 import Footer from '@app/components/Footer';
 import { CONTACT_INFO } from '@app/constants';
-
-// Form validation schema
-const contactFormSchema = z.object({
-  name: z.string().min(2, {
-    message: 'Name must be at least 2 characters.',
-  }),
-  email: z.string().email({
-    message: 'Please enter a valid email address.',
-  }),
-  subject: z.string().min(5, {
-    message: 'Subject must be at least 5 characters.',
-  }),
-  message: z.string().min(10, {
-    message: 'Message must be at least 10 characters.',
-  }),
-});
-
-type ContactFormValues = z.infer<typeof contactFormSchema>;
+import { useToast } from '@app/hooks/use-toast';
 
 const Contact = () => {
+  const { toast } = useToast();
+
+  const contactSection = useRef<HTMLDivElement | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   // Contact info
@@ -66,26 +51,43 @@ const Contact = () => {
       details: ['Monday - Friday: 10AM - 8PM', 'Saturday: 10AM - 2PM'],
     },
   ];
-
   // Form definition
-  const form = useForm<ContactFormValues>({
+  const contactFormSchema = z.object({
+    name: z.string().min(2, {
+      message: 'Name must be at least 2 characters.',
+    }),
+    email: z.string().email({
+      message: 'Please enter a valid email address.',
+    }),
+    phone: z.string().min(6, {
+      message: 'Please enter a valid email address.',
+    }),
+    subject: z.string().min(5, {
+      message: 'Subject must be at least 5 characters.',
+    }),
+    message: z.string().min(10, {
+      message: 'Message must be at least 10 characters.',
+    }),
+  });
+  const form = useForm<z.infer<typeof contactFormSchema>>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       name: '',
       email: '',
+      phone: '',
       subject: '',
       message: '',
     },
   });
 
-  // Form submission handler
-  function onSubmit(data: ContactFormValues) {
+  function onSubmit(data: z.infer<typeof contactFormSchema>) {
     setIsSubmitting(true);
-
     // Simulate form submission
     setTimeout(() => {
       console.log(data);
-      // toast.success("Message sent successfully! We'll get back to you soon.");
+      toast({
+        title: "Message sent successfully! We'll get back to you soon.",
+      });
       form.reset();
       setIsSubmitting(false);
     }, 1500);
@@ -102,16 +104,17 @@ const Contact = () => {
             <Badge variant="outline" className="mb-4 text-coral">
               Contact Us
             </Badge>
-            <h1 className="mb-6 text-4xl font-bold md:text-5xl">Get in Touch with Our Team</h1>
+            <h1 className="mb-6 text-4xl font-bold md:text-5xl">Get in Touch with US</h1>
             <p className="mb-8 text-xl text-muted-foreground">
-              Have a question, a project idea, or want to collaborate? We'd love to hear from you.
+              Have a question, a project idea, or want to collaborate? We&apos;d love to hear from
+              you.
             </p>
           </div>
         </div>
       </section>
 
       {/* Contact Form and Info Section */}
-      <section className="py-16 md:py-24">
+      <section ref={contactSection} className="py-16 md:py-24">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-1 gap-12 lg:grid-cols-2">
             {/* Contact Form */}
@@ -123,25 +126,25 @@ const Contact = () => {
             >
               <h2 className="mb-6 text-2xl font-bold md:text-3xl">Send Us a Message</h2>
               <p className="mb-8 text-muted-foreground">
-                Fill out the form below, and we'll get back to you as soon as possible.
+                Fill out the form below, and we&apos;ll get back to you as soon as possible.
               </p>
 
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Your Name</FormLabel>
+                        <FormControl>
+                          <Input placeholder="John Doe" {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
                   <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
-                    <FormField
-                      control={form.control}
-                      name="name"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Your Name</FormLabel>
-                          <FormControl>
-                            <Input placeholder="John Doe" {...field} />
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
                     <FormField
                       control={form.control}
                       name="email"
@@ -150,6 +153,19 @@ const Contact = () => {
                           <FormLabel>Your Email</FormLabel>
                           <FormControl>
                             <Input placeholder="johndoe@example.com" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={form.control}
+                      name="phone"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Your Phone Number</FormLabel>
+                          <FormControl>
+                            <Input placeholder="XXXX XXX XXX" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -205,9 +221,8 @@ const Contact = () => {
             <div>
               <h2 className="mb-6 text-2xl font-bold md:text-3xl">Contact Information</h2>
               <p className="mb-8 text-muted-foreground">
-                We're here to help. Reach out to us through any of these channels.
+                We&apos;re here to help. Reach out to us through any of these channels.
               </p>
-
               <div className="mb-12 grid grid-cols-1 gap-8 sm:grid-cols-2">
                 {CONTACT_INFO_EXTENDED.map((info, index) => (
                   <motion.div
@@ -261,7 +276,6 @@ const Contact = () => {
               Here are some common questions our clients ask us.
             </p>
           </div>
-
           <div className="mx-auto grid max-w-4xl grid-cols-1 gap-8 md:grid-cols-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -287,7 +301,7 @@ const Contact = () => {
               <h3 className="mb-3 text-lg font-semibold">How long does a typical project take?</h3>
               <p className="text-muted-foreground">
                 Project timelines vary based on complexity. Small projects may take 2-4 weeks, while
-                larger ones can take 2-6 months. We'll provide a detailed timeline during
+                larger ones can take 2-6 months. We&apos;ll provide a detailed timeline during
                 consultation.
               </p>
             </motion.div>
@@ -317,8 +331,8 @@ const Contact = () => {
             >
               <h3 className="mb-3 text-lg font-semibold">How do we get started on a project?</h3>
               <p className="text-muted-foreground">
-                Contact us through the form on this page or email us directly. We'll schedule an
-                initial consultation to discuss your needs and how we can help.
+                Contact us through the form on this page or email us directly. We&apos;ll schedule
+                an initial consultation to discuss your needs and how we can help.
               </p>
             </motion.div>
           </div>
@@ -326,16 +340,19 @@ const Contact = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 md:py-20">
+      <section className="bg-muted/30 py-16 md:py-20">
         <div className="container mx-auto px-4 md:px-6">
           <div className="rounded-2xl bg-black p-8 text-white md:p-12">
             <div className="mx-auto max-w-3xl text-center">
               <h2 className="mb-4 text-2xl font-bold md:text-3xl">Start Your Project Today</h2>
               <p className="mb-8 text-gray-400">
-                Let's collaborate to bring your vision to life. Take the first step towards
+                Let&apos;s collaborate to bring your vision to life. Take the first step towards
                 innovation.
               </p>
-              <Button className="bg-coral text-white hover:bg-coral/90">
+              <Button
+                className="bg-coral text-white hover:bg-coral/90"
+                onClick={() => contactSection?.current?.scrollIntoView({ behavior: 'smooth' })}
+              >
                 Schedule a Consultation
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>

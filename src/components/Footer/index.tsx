@@ -4,6 +4,7 @@ import { Facebook, Twitter, Instagram, Github, Mail, MapPin, Phone } from 'lucid
 import { CONTACT_INFO, SOCIALS } from '@app/constants';
 import { Button } from '@app/components/ui/button';
 import { Input } from '@app/components/ui/input';
+import Image from 'next/image';
 
 const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -40,8 +41,7 @@ const Footer: React.FC = () => {
           {/* Logo and Social Links */}
           <div className="md:col-span-4 lg:col-span-5">
             <Link href="/" className="mb-4 flex items-center space-x-2">
-              <span className="text-2xl font-bold text-coral">48</span>
-              <span className="text-2xl font-light">Studios</span>
+              <Image src="logo-landscape.svg" alt="48 Studios" width={200} height={100} />
             </Link>
             <p className="mb-6 max-w-md text-gray-400">
               We craft innovative solutions through software development, IoT engineering, 3D
