@@ -26,7 +26,7 @@ import Link from 'next/link';
 
 const Services = () => {
   const [activeService, setActiveService] = useState('software');
-  const currentService = SERVICES.find((service) => service.id === activeService) || services[0];
+  const currentService = SERVICES.find((service) => service.id === activeService) || SERVICES[0];
 
   // Form schema
   const formSchema = z.object({
