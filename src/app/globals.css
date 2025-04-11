@@ -34,7 +34,6 @@
 
     --radius: 0.5rem;
   }
-
   .dark {
     --background: 0 0% 10%;
     --foreground: 0 0% 95%;
@@ -74,35 +73,31 @@
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
   }
+  a, button {
+    transition: all 0.2s linear;
+  }
 
   .animate-delay-100 {
     animation-delay: 100ms;
   }
-
   .animate-delay-200 {
     animation-delay: 200ms;
   }
-
   .animate-delay-300 {
     animation-delay: 300ms;
   }
-
   .animate-delay-400 {
     animation-delay: 400ms;
   }
-
   .animate-delay-500 {
     animation-delay: 500ms;
   }
-
   .animate-delay-600 {
     animation-delay: 600ms;
   }
-
   .animate-delay-700 {
     animation-delay: 700ms;
   }
-
   .apple-text-gradient {
     @apply font-bold bg-clip-text text-transparent bg-gradient-to-r from-coral via-coral-light to-coral-dark;
   }
