@@ -218,7 +218,8 @@ const products: Record<string, Product> = {
   },
 };
 
-const BillOfMaterials = ({ product: _ }: { product: Product }) => (
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const BillOfMaterials = ({ product }: { product: Product }) => (
   <div className="space-y-6">
     <h3 className="text-xl font-medium">Bill of Materials</h3>
 
@@ -329,7 +330,9 @@ const Documentation = () => {
         <div className="flex flex-1 items-center justify-center">
           <div className="px-4 text-center">
             <h1 className="mb-4 text-3xl font-bold">Documentation Not Found</h1>
-            <p className="mb-6">The product documentation you're looking for doesn't exist.</p>
+            <p className="mb-6">
+              The product documentation you&apos;re looking for doesn&apos;t exist.
+            </p>
             <Link href="/products">
               <Button className="bg-coral text-white hover:bg-coral-dark">
                 <ArrowLeft className="mr-2 h-4 w-4" />
@@ -629,7 +632,7 @@ const Documentation = () => {
                               <h5 className="mb-2 font-medium">Initial Setup:</h5>
                               <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
                                 <li>Power on the device</li>
-                                <li>Connect to the "SmartSensor" WiFi access point</li>
+                                <li>Connect to the &#34;SmartSensor&#34; WiFi access point</li>
                                 <li>Navigate to 192.168.4.1 in your browser</li>
                                 <li>Configure your WiFi network settings</li>
                                 <li>The device will restart and connect to your network</li>
@@ -638,7 +641,7 @@ const Documentation = () => {
                             <div>
                               <h5 className="mb-2 font-medium">Usage:</h5>
                               <ul className="list-inside list-disc space-y-1 text-sm text-muted-foreground">
-                                <li>Access the web interface via the device's IP address</li>
+                                <li>Access the web interface via the device&apos;s IP address</li>
                                 <li>Configure update intervals and thresholds</li>
                                 <li>Set up MQTT integration (optional)</li>
                                 <li>Enable data logging (optional)</li>
@@ -849,7 +852,7 @@ const Documentation = () => {
                 <div className="p-6">
                   <h3 className="mb-2 text-lg font-medium">API Documentation</h3>
                   <p className="mb-4 text-sm text-muted-foreground">
-                    Detailed technical documentation for the device's REST and MQTT APIs.
+                    Detailed technical documentation for the device&apos;s REST and MQTT APIs.
                   </p>
                   <Button variant="link" className="p-0 text-coral hover:text-coral-dark">
                     View Documentation
