@@ -41,8 +41,8 @@ const SERVICES: Service[] = [
     ],
   },
   {
-    id: 'printing',
-    title: '3D Printing',
+    id: '3d',
+    title: '3D Designing/Printing',
     description: 'Rapid prototyping and production of physical components',
     icon: Printer,
     features: [
@@ -61,7 +61,7 @@ const SERVICES: Service[] = [
   },
   {
     id: 'design',
-    title: '3D Design',
+    title: 'PCB Design',
     description: 'Creative modeling and visualization for products and environments',
     icon: Layers,
     features: [

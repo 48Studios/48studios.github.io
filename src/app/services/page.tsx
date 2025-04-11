@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { Code, Cpu, Printer, Layers, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { cn } from '@app/lib/utils';
 import { Button } from '@app/components/ui/button';
 import {
@@ -20,22 +20,23 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { toast } from '@app/hooks/use-toast';
 import Navbar from '@app/components/Navbar';
 import Footer from '@app/components/Footer';
-
-// Define service data
-
-// Form schema
-const formSchema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
-  email: z.string().email({ message: 'Please enter a valid email address.' }),
-  company: z.string().optional(),
-  service: z.string().min(1, { message: 'Please select a service.' }),
-  message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
-});
+import Hero from '@app/components/Hero';
+import { CONTACT_INFO, SERVICES } from '@app/constants';
+import Link from 'next/link';
 
 const Services = () => {
   const [activeService, setActiveService] = useState('software');
-  const currentService = services.find((service) => service.id === activeService) || services[0];
+  const currentService = SERVICES.find((service) => service.id === activeService) || services[0];
 
+  // Form schema
+  const formSchema = z.object({
+    name: z.string().min(2, { message: 'Name must be at least 2 characters.' }),
+    email: z.string().email({ message: 'Please enter a valid email address.' }),
+    phone: z.string().min(6, { message: 'Please enter a valid phone number.' }),
+    company: z.string().optional(),
+    service: z.string().min(1, { message: 'Please select a service.' }),
+    message: z.string().min(10, { message: 'Message must be at least 10 characters.' }),
+  });
   // Form handling
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -63,51 +64,47 @@ const Services = () => {
       <Navbar />
       <main>
         {/* Hero Section */}
-        <section className="relative bg-secondary/30 py-20 md:py-28">
-          <div className="container mx-auto px-4 text-center">
-            <h1 className="mb-6 text-4xl font-bold md:text-5xl">Our Services</h1>
-            <p className="mx-auto mb-12 max-w-3xl text-lg text-muted-foreground md:text-xl">
-              We deliver end-to-end solutions that transform ideas into reality through cutting-edge
-              technology and innovative design.
-            </p>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
-              {services.map((service) => {
-                const Icon = service.icon;
-                return (
-                  <button
-                    key={service.id}
-                    onClick={() => setActiveService(service.id)}
-                    className={cn(
-                      'rounded-lg p-6 transition-all duration-300',
-                      activeService === service.id
-                        ? 'border border-coral/20 bg-coral/10'
-                        : 'border border-border bg-background/80 hover:bg-muted/50',
-                    )}
-                  >
-                    <div className="flex flex-col items-center text-center">
-                      <div
-                        className={cn(
-                          'mb-4 rounded-full p-3',
-                          activeService === service.id
-                            ? 'bg-coral text-white'
-                            : 'bg-muted text-muted-foreground',
-                        )}
-                      >
-                        <Icon className="h-6 w-6" />
-                      </div>
-                      <h3 className="text-lg font-medium">{service.title}</h3>
-                    </div>
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </section>
+        <Hero
+          title="Our Services"
+          subtitle="We deliver end-to-end solutions that transform ideas into reality through
+                cutting-edge technology and innovative design."
+        />
 
         {/* Service Detail Section */}
         <section className="bg-background py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-5xl">
+              <div className="mb-10 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-4">
+                {SERVICES.map((service) => {
+                  const Icon = service.icon;
+                  return (
+                    <button
+                      key={service.id}
+                      onClick={() => setActiveService(service.id)}
+                      className={cn(
+                        'rounded-lg p-6 transition-all duration-300',
+                        activeService === service.id
+                          ? 'border border-coral/20 bg-coral/10'
+                          : 'border border-border bg-background/80 hover:bg-muted/50',
+                      )}
+                    >
+                      <div className="flex flex-col items-center text-center">
+                        <div
+                          className={cn(
+                            'mb-4 rounded-full p-3',
+                            activeService === service.id
+                              ? 'bg-coral text-white'
+                              : 'bg-muted text-muted-foreground',
+                          )}
+                        >
+                          <Icon className="h-6 w-6" />
+                        </div>
+                        <h3 className="text-lg font-medium">{service.title}</h3>
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
               <div className="flex flex-col items-start gap-12 md:flex-row">
                 {/* Service Info */}
                 <div className="flex-1">
@@ -143,21 +140,24 @@ const Services = () => {
                     <p className="mb-4 text-muted-foreground">
                       Contact us today for a free consultation on your project requirements.
                     </p>
-                    <div className="flex flex-col space-y-2">
+                    <div className="flex flex-row space-x-2">
                       <div className="flex items-center gap-2">
                         <span className="font-medium">Email:</span>
-                        <a
-                          href="mailto:contact@crafteddigitallabs.com"
+                        <Link
+                          href={`mailto:${CONTACT_INFO.email}`}
                           className="text-coral hover:underline"
                         >
-                          contact@crafteddigitallabs.com
-                        </a>
+                          {CONTACT_INFO.email}
+                        </Link>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="font-medium">Phone:</span>
-                        <a href="tel:+1234567890" className="text-coral hover:underline">
-                          +1 (234) 567-890
-                        </a>
+                        <Link
+                          href={`tel:${CONTACT_INFO.phone}`}
+                          className="text-coral hover:underline"
+                        >
+                          {CONTACT_INFO.phone}
+                        </Link>
                       </div>
                     </div>
                   </div>
@@ -221,7 +221,7 @@ const Services = () => {
                                 className="w-full rounded-md border border-input bg-background px-3 py-2 focus:border-coral focus:outline-none focus:ring-2 focus:ring-coral"
                                 {...field}
                               >
-                                {services.map((service) => (
+                                {SERVICES.map((service) => (
                                   <option key={service.id} value={service.id}>
                                     {service.title}
                                   </option>

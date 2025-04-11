@@ -21,6 +21,7 @@ import Navbar from '@app/components/Navbar';
 import Footer from '@app/components/Footer';
 import { CONTACT_INFO } from '@app/constants';
 import { useToast } from '@app/hooks/use-toast';
+import Hero from '@app/components/Hero';
 
 const Contact = () => {
   const { toast } = useToast();
@@ -94,24 +95,16 @@ const Contact = () => {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="h-full bg-background">
       <Navbar />
-
-      {/* Hero Section */}
-      <section className="bg-muted/30 pb-16 pt-24 md:pb-24 md:pt-32">
-        <div className="container mx-auto px-4 md:px-6">
-          <div className="mx-auto max-w-3xl text-center">
-            <Badge variant="outline" className="mb-4 text-coral">
-              Contact Us
-            </Badge>
-            <h1 className="mb-6 text-4xl font-bold md:text-5xl">Get in Touch with US</h1>
-            <p className="mb-8 text-xl text-muted-foreground">
-              Have a question, a project idea, or want to collaborate? We&apos;d love to hear from
-              you.
-            </p>
-          </div>
-        </div>
-      </section>
+      <main>
+        {/* Hero Section */}
+        <Hero
+          title="Get in Touch with Us"
+          subtitle="Have a question, a project idea, or want to collaborate? We'd love to hear from
+            you."
+        />
+      </main>
 
       {/* Contact Form and Info Section */}
       <section ref={contactSection} className="py-16 md:py-24">

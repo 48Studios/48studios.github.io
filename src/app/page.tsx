@@ -1,6 +1,6 @@
 import Navbar from '@app/components/Navbar';
 import Footer from '@app/components/Footer';
-import Hero from '@app/components/Hero';
+import Hero from '../components/HeroHome';
 
 export default function Home() {
   return (

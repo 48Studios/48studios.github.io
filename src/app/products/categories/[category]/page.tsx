@@ -1,10 +1,12 @@
+'use client';
+
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { ArrowRight, CheckCircle2, ChevronRight, Download, Play, ShoppingCart } from 'lucide-react';
 import { Button } from '@app/components/ui/button';
 import { Badge } from '@app/components/ui/badge';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@app/components/ui/tabs';
+import { Tabs, TabsList, TabsTrigger } from '@app/components/ui/tabs';
 import {
   Carousel,
   CarouselContent,
@@ -309,7 +311,7 @@ const Category = () => {
           <div className="p-8 text-center">
             <h1 className="mb-4 text-2xl font-bold">Product Lineup Not Found</h1>
             <p className="mb-6 text-muted-foreground">
-              The product lineup you're looking for doesn't exist.
+              The product lineup you&apos;re looking for doesn&apos;t exist.
             </p>
             <Link href="/products">
               <Button className="bg-coral hover:bg-coral-dark">Return to Products</Button>
