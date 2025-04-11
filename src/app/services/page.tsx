@@ -1,6 +1,7 @@
 'use client';
 
-import { useState } from 'react';
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { Check } from 'lucide-react';
 import { cn } from '@app/lib/utils';
 import { Button } from '@app/components/ui/button';
@@ -22,9 +23,8 @@ import Navbar from '@app/components/Navbar';
 import Footer from '@app/components/Footer';
 import Hero from '@app/components/Hero';
 import { CONTACT_INFO, SERVICES } from '@app/constants';
-import Link from 'next/link';
 
-const Services = () => {
+const Services: React.FC = () => {
   const [activeService, setActiveService] = useState('software');
   const currentService = SERVICES.find((service) => service.id === activeService) || SERVICES[0];
 
